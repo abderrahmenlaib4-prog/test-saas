@@ -1,0 +1,6 @@
+{
+  "name": "Lead Finder SaaS",
+  "description": "A premium SaaS lead generation and CRM dashboard allowing users to find targets, browse metrics, review business analytics, and export lead directories.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
