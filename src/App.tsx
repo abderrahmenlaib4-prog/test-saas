@@ -18,8 +18,12 @@ import LeadDrawer from "./components/LeadDrawer";
 import AnalyticsDashboard from "./components/AnalyticsDashboard";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import Auth from "./components/Auth";
 
 export default function App() {
+  // Authentication State
+  const [user, setUser] = useState<{name: string; email: string} | null>(null);
+
   const [activeTab, setActiveTab] = useState("home");
   // Navigation stream states
   const [activeStep, setActiveStep] = useState<'search' | 'loading' | 'results' | 'empty' | 'error'>('search');
@@ -235,15 +239,25 @@ export default function App() {
     }
   };
 
+  if (!user) {
+    return <Auth onSignIn={setUser} />;
+  }
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] font-sans antialiased flex SelectionBox selection:bg-[#16A34A]/20 selection:text-[#16A34A] overflow-hidden">
       
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        user={user}
+        onLogout={() => setUser(null)}
+      />
 
       {/* Main Core Body stage */}
       <div className="flex-1 flex flex-col min-w-0 h-screen">
         <Header 
           title={activeTab === 'home' ? 'Dashboard' : 'Lead Search'} 
+          userName={user.name}
         />
         
         <main className="flex-1 overflow-y-auto px-6 py-8 md:px-10 pb-20">

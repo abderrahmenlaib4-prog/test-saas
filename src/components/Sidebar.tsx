@@ -1,15 +1,17 @@
 import React from "react";
 import { 
   Home, Star, Target, Search, Share2, DownloadCloud, 
-  Settings, HelpCircle, BarChart2, MoreVertical
+  Settings, HelpCircle, BarChart2, MoreVertical, LogOut
 } from "lucide-react";
 
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  user: { name: string; email: string };
+  onLogout: () => void;
 }
 
-export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
+export default function Sidebar({ activeTab, setActiveTab, user, onLogout }: SidebarProps) {
   const sections = [
     {
       title: "Overview",
@@ -87,20 +89,26 @@ export default function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
 
       {/* User Profile Footer */}
       <div className="p-4 mt-auto border-t border-[#E2E8F0]">
-        <button className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-slate-100 transition-colors">
-          <div className="flex items-center gap-3">
+        <div className="w-full flex items-center justify-between px-2 py-2.5 rounded-xl bg-white border border-slate-200 shadow-sm shadow-slate-100">
+          <div className="flex items-center gap-2.5 overflow-hidden">
             <img 
-              src="https://api.dicebear.com/7.x/notionists/svg?seed=Paul&backgroundColor=e2e8f0" 
+              src={`https://api.dicebear.com/7.x/notionists/svg?seed=${user.name}&backgroundColor=e2e8f0`} 
               alt="User profile" 
-              className="w-10 h-10 rounded-full bg-slate-200 object-cover"
+              className="w-9 h-9 rounded-full bg-slate-100 object-cover border border-slate-200 flex-shrink-0"
             />
-            <div className="text-left">
-              <span className="block text-sm font-bold text-[#0F172A]">Paul Richard</span>
-              <span className="block text-xs font-medium text-[#64748B]">View profile</span>
+            <div className="text-left w-[110px]">
+              <span className="block text-[13px] font-bold text-[#0F172A] truncate" title={user.name}>{user.name}</span>
+              <span className="block text-[10px] font-medium text-[#64748B] truncate" title={user.email}>{user.email}</span>
             </div>
           </div>
-          <MoreVertical className="w-4 h-4 text-[#64748B]" />
-        </button>
+          <button 
+            onClick={onLogout}
+            className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors focus:outline-none focus:ring-1 focus:ring-red-200 flex-shrink-0"
+            title="Log out"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     </aside>
   );
